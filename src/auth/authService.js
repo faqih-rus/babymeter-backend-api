@@ -1,32 +1,18 @@
 // src/auth/authService.js
-const firebase = require('firebase/app');
-require('firebase/auth');
+const admin = require('firebase-admin');
 
-async function registerMother(email, password) {
-    try {
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        return userCredential.user;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+async function loginUser(email, password) {
+    const user = await admin.auth().getUserByEmail(email);
+    const token = await admin.auth().createCustomToken(user.uid);
+    return token;
 }
 
-async function loginMother(email, password) {
-    try {
-        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-        return userCredential.user;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+async function registerUser(email, password, role) {
+    await admin.auth().createUser({
+        email,
+        password,
+        displayName: role
+    });
 }
 
-async function loginNurse(email, password) {
-    try {
-        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-        return user;
-    } catch (error) {
-        throw new Error('Invalid nurse credentials');
-    }
-}
-
-module.exports = { registerMother, loginMother, loginNurse };
+module.exports = { loginUser, registerUser };

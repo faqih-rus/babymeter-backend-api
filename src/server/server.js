@@ -1,24 +1,23 @@
-// src/server/server.js
+// server/server.js
 const express = require('express');
-const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const routes = require('./routes');
-const { loadTFLiteModel } = require('../services/tfliteService');
-
-dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Menggunakan routes
-app.use('/api', routes);
+app.use('/', routes);
 
-// Load the TensorFlow Lite model
-loadTFLiteModel().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-}).catch((err) => {
-    console.error('Failed to load the model', err);
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send({ error: 'Something went wrong!' });
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
