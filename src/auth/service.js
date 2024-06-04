@@ -6,4 +6,5 @@ async function loginUser(email, password) {
     return token;
 }
 
+
 module.exports = { loginUser };
