@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const nurseRoutes = require('./routes/nurseRoutes');
 const authRoutes = require('./auth/routes');
-const errorHandler = require('./utils/errorHandler');
+const errorHandler = require('./exceptions/errorHandler');
 
 const app = express();
 const port = process.env.PORT || 3000;
