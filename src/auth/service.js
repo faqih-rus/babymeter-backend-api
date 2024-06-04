@@ -1,4 +1,3 @@
-// src/auth/authService.js
 const admin = require('firebase-admin');
 
 async function loginUser(email, password) {
@@ -7,12 +6,4 @@ async function loginUser(email, password) {
     return token;
 }
 
-async function registerUser(email, password, role) {
-    await admin.auth().createUser({
-        email,
-        password,
-        displayName: role
-    });
-}
-
-module.exports = { loginUser, registerUser };
+module.exports = { loginUser };

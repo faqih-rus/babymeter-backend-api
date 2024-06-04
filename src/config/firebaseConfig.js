@@ -1,6 +1,5 @@
-// src/config/firebaseConfig.js
 const admin = require('firebase-admin');
-const serviceAccount = require('./capstone-babymeter-firebase-adminsdk-f1kgg-1bf92a891c.json');
+const serviceAccount = require('./path/to/serviceAccountKey.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)

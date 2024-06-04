@@ -1,38 +1,28 @@
-// src/services/storageService.js
 const { db } = require('../config/firebaseConfig');
 
-async function saveMeasurement(userId, measurement) {
-    const docRef = db.collection('measurements').doc(userId).collection('data').doc();
-    await docRef.set(measurement);
+async function savePrediction(userId, prediction) {
+    const docRef = db.collection('predictions').doc(userId).collection('data').doc(prediction.id);
+    await docRef.set(prediction);
     return docRef.id;
 }
 
-async function getMeasurements(userId) {
-    const snapshot = await db.collection('measurements').doc(userId).collection('data').get();
-    const measurements = snapshot.docs.map(doc => ({
+async function getPredictions(userId) {
+    const snapshot = await db.collection('predictions').doc(userId).collection('data').get();
+    const predictions = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
     }));
-    return measurements;
+    return predictions;
 }
 
-async function getMeasurementById(userId, measurementId) {
-    const docRef = db.collection('measurements').doc(userId).collection('data').doc(measurementId);
-    const doc = await docRef.get();
-    if (!doc.exists) {
-        throw new Error('Measurement not found');
-    }
-    return { id: doc.id, ...doc.data() };
-}
-
-async function updateMeasurement(userId, measurementId, updates) {
-    const docRef = db.collection('measurements').doc(userId).collection('data').doc(measurementId);
+async function updatePrediction(userId, predictionId, updates) {
+    const docRef = db.collection('predictions').doc(userId).collection('data').doc(predictionId);
     await docRef.update(updates);
 }
 
-async function deleteMeasurement(userId, measurementId) {
-    const docRef = db.collection('measurements').doc(userId).collection('data').doc(measurementId);
-    await docRef.delete();
+async function updateProfile(userId, profileData) {
+    const docRef = db.collection('profiles').doc(userId);
+    await docRef.update(profileData);
 }
 
-module.exports = { saveMeasurement, getMeasurements, getMeasurementById, updateMeasurement, deleteMeasurement };
+module.exports = { savePrediction, getPredictions, updatePrediction, updateProfile };
