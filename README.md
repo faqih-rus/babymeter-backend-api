@@ -19,9 +19,10 @@ Proyek BabyMeter bertujuan untuk menyediakan alat bagi perawat untuk melakukan p
 
 ### API Endpoints
 1. **Auth**
+    - POST `/auth/register`: register menggunakan Firebase Authentication.
     - POST `/auth/login`: Login menggunakan Firebase Authentication.
 
-2. **Nurse**
+3. **Nurse**
     - POST `/nurse/predictions`: Membuat prediksi baru.
     - GET `/nurse/predictions`: Mengambil semua data prediksi.
     - PUT `/nurse/predictions/:id`: Mengedit prediksi berdasarkan ID.
