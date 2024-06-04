@@ -9,6 +9,7 @@ Proyek BabyMeter bertujuan untuk menyediakan alat bagi perawat untuk melakukan p
 ## Requirements
 
 **Must have:**
+- Register menggunakan Firebase Authentication
 - Login menggunakan Firebase Authentication
 - Membuat prediksi berdasarkan gambar yang diunggah
 - Menyimpan hasil prediksi di Firestore
